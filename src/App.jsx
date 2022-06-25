@@ -1,44 +1,38 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import Profile from "./ProfileComponent/ProfileComponent"
+import Button from "./ButtonComponent/Button"
+import axios from "axios"
+import { useEffect, useState } from "react"
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [request, setRequest] = useState([])
+
+  const url = 'https://api.github.com/users/marcelompimenta'
+
+  useEffect(() => {
+    axios.get(url)
+      .then(response => {
+        setRequest(response)
+      })
+    console.log("fui executado")
+  }, [])
+
+  function test() {
+    console.clear()
+    console.log(request.data)
+  }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
+    <>
+      <h1>Survey GitHub User</h1>
+      <Profile />
+      <Button
+        func={test}
+        description={"Teste 1"}
+        param
+      />
+
+    </>
   )
 }
 
