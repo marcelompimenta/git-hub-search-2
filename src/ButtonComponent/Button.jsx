@@ -1,6 +1,6 @@
-function Button({ func, description, param }) {
+function Button({ clName, func, description, param }) {
     return (
-        <div>
+        <div className={clName}>
             <button
                 onClick={() => { func(param) }}
                 type="button">{description}</button>
