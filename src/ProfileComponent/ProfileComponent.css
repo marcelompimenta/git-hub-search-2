@@ -1,0 +1,9 @@
+.container-image img {
+    width: 90%;
+    margin-bottom: 1.5rem;
+}
+
+.name {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
