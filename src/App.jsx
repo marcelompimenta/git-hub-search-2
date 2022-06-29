@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import './App.css'
 import IdGenerate from "./Hooks/IdGenerate"
 import Repositories from "./RepositoriesComponent/RepositoriesComponent"
+import Modal from "./ModalComponent/Modal"
 
 function App() {
 
@@ -44,8 +45,10 @@ function App() {
 
       />
       {
-        repos.map(repo => (
+        repos.map(repo => (<>
           <Repositories dataRepos={repo} key={IdGenerate()} />
+          <Modal />
+        </>
         ))
       }
     </>
