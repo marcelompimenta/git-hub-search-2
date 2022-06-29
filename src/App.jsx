@@ -3,9 +3,13 @@ import Button from "./ButtonComponent/Button"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import './App.css'
+import IdGenerate from "./Hooks/IdGenerate"
+import Repositories from "./RepositoriesComponent/RepositoriesComponent"
+
 function App() {
 
   const [request, setRequest] = useState([])
+  const [repos, setRepos] = useState([])
 
   const url = 'https://api.github.com/users/marcelompimenta'
 
@@ -14,12 +18,18 @@ function App() {
       .then(response => {
         setRequest(response.data)
       })
-    console.log("fui executado")
-  }, [])
+  }, []);
 
-  function test() {
-    console.clear()
-    console.log(request)
+  useEffect(() => {
+    axios.get(request.repos_url)
+      .then(response => {
+        localStorage.setItem('repositories', JSON.stringify(response.data))
+      })
+  }, [request])
+
+  function showRepositories() {
+    const repositories = JSON.parse(localStorage.getItem('repositories'))
+    setRepos(repositories)
   }
 
   return (
@@ -28,11 +38,16 @@ function App() {
       <Profile data={request} />
       <Button
         clName={"profile-button"}
-        func={test}
+        func={showRepositories}
         description={"Teste 1"}
         param
-      />
 
+      />
+      {
+        repos.map(repo => (
+          <Repositories dataRepos={repo} key={IdGenerate()} />
+        ))
+      }
     </>
   )
 }
