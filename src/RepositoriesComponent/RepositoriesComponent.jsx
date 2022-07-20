@@ -1,6 +1,9 @@
 import Button from "../ButtonComponent/Button"
+import getIndexObject from "../Hooks/getIndexObject"
+import IdGenerate from "../Hooks/IdGenerate"
 
 function Repositories({ dataRepos }) {
+
     const { name, created_at, language } = dataRepos
     return (
         <div>
@@ -14,7 +17,11 @@ function Repositories({ dataRepos }) {
                 <span>{language}</span>
             </div>
             <div>
-                <Button description={"Ver detalhes"} />
+                <Button
+                    key={IdGenerate()}
+                    func={getIndexObject}
+                    param={dataRepos}
+                    description={"Ver detalhes"} />
             </div>
         </div>
     )
