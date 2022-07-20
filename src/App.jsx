@@ -1,16 +1,19 @@
 import Profile from "./ProfileComponent/ProfileComponent"
 import Button from "./ButtonComponent/Button"
 import axios from "axios"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import './App.css'
 import IdGenerate from "./Hooks/IdGenerate"
 import Repositories from "./RepositoriesComponent/RepositoriesComponent"
 import Modal from "./ModalComponent/Modal"
+import getIndexObject from "./Hooks/getIndexObject"
 
 function App() {
 
   const [request, setRequest] = useState([])
   const [repos, setRepos] = useState([])
+  const [isVisible, setIsVisible] = useState(false)
+
 
   const url = 'https://api.github.com/users/marcelompimenta'
 
@@ -33,23 +36,36 @@ function App() {
     setRepos(repositories)
   }
 
+  function modifyVisibillity() {
+    if (!isVisible) setIsVisible(true);
+  }
+
   return (
     <>
       <h1>Survey GitHub User</h1>
-      <Profile data={request} />
+      <Profile
+        key={IdGenerate()}
+        data={request} />
       <Button
+        key={IdGenerate()}
         clName={"profile-button"}
         func={showRepositories}
-        description={"Teste 1"}
+        description={"Ver repositorios"}
         param
 
       />
       {
-        repos.map(repo => (<>
-          <Repositories dataRepos={repo} key={IdGenerate()} />
-          <Modal />
-        </>
-        ))
+        React.Children.toArray(
+          repos.map((repo, index) => (
+            <>
+              <Repositories
+                dataRepos={repo}
+                ind={index}
+              />
+
+              {isVisible ? <Modal repository={repo} /> : false}
+            </>
+          )))
       }
     </>
   )

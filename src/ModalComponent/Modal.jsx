@@ -1,29 +1,36 @@
 import './Modal.css'
 
-function Modal() {
+function Modal({ repository }) {
+    console.log(repository)
+    const { full_name, description, language, git_url, html_url } = repository
+
     return (
         <div className='container_modal'>
             <div>
-                <h3>Nome Completo do Repositorio</h3>
+                <h3>{full_name}</h3>
             </div>
             <div>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laboriosam est cum ab incidunt? Quasi, omnis officiis culpa delectus ducimus eveniet?</p>
+                <p>{description}</p>
             </div>
             <div>
                 <div>
-                    <span>JavaScript 70%</span>
-                    <span>HTML 10%</span>
-                    <span>CSS 20%</span>
+                    <span>{language}</span>
                 </div>
             </div>
             <div className="container_link_url">
                 <div className="container_link">
-                    <input type="text" name="url_clone" id="url_clone" value="git clone https://api.github.com" readOnly />
+                    <input
+                        type="text"
+                        name="url_clone"
+                        id="url_clone"
+                        value={`git clone ${git_url}`}
+                        readOnly />
+
                     <i>CLONAR</i>
                 </div>
             </div>
             <div>
-                <a href="#">Link do repositorio</a>
+                <a href={html_url}>Link do repositorio</a>
             </div>
         </div>
     )
